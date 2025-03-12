@@ -925,7 +925,7 @@ function Frosty.new(title, config)
                 -- Slider Label
                 local SliderLabel = Instance.new("TextLabel")
                 SliderLabel.Name = "SliderLabel"
-                SliderLabel.Size = UDim2.new(1, -20, 0, 25)
+                SliderLabel.Size = UDim2.new(1, 0, 0, 25)
                 SliderLabel.Position = UDim2.new(0, 10, 0, 0)
                 SliderLabel.BackgroundTransparency = 1
                 SliderLabel.Text = sliderName
@@ -1044,6 +1044,12 @@ function Frosty.new(title, config)
                     end
                     
                     Frosty.Utils.CreateTween(Slider, 0.2, {BackgroundColor3 = Frosty.Theme.ButtonBackground}):Play()
+                end)
+                
+                UserInputService.InputChanged:Connect(function(input)
+                    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+                        dragInput = input
+                    end
                 end)
                 
                 UserInputService.InputChanged:Connect(function(input)
