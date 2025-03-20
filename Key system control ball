@@ -1,0 +1,169 @@
+--[[
+This script implements a key system for Roblox, allowing users to redeem a specific key ("RinandYuki")
+to execute a script loaded from a GitHub URL. It also includes a button to copy a Discord invite link
+to the user's clipboard.
+
+**Important Security Considerations:**
+
+* **loadstring is extremely dangerous!** Never use `loadstring` in a live game unless you completely trust
+  the source of the code. Malicious code loaded through `loadstring` can compromise the entire game.  It's
+  strongly recommended to explore safer alternatives like ModuleScripts, or even data stores for configuration.
+
+* **GitHub as a source for scripts:**  Using GitHub directly as a source for scripts can be unreliable.  GitHub
+  is not a Content Delivery Network (CDN) and might have availability issues.  Consider using a more reliable
+  hosting solution for your scripts.
+
+* **Key Validation:**  A simple key like "RinandYuki" is very easy to guess and bypass. Implement more robust
+  key generation and validation techniques to prevent unauthorized access.  Consider using more complex
+  keys, server-side validation, and potentially using obfuscation to protect the key.
+
+* **Discord Link Security:**  Long-term Discord invite links are often abused. Set the link to expire and
+  only offer a limited number of uses. This makes it harder for bots to scrape the link.
+
+**Recommendations for Improvement:**
+
+1. **Replace loadstring:** Use ModuleScripts or a more secure alternative for script execution.
+2. **Robust Key Validation:** Implement stronger key generation and server-side validation.
+3. **Reliable Script Hosting:** Use a dedicated hosting solution for your scripts.
+4. **Secure Discord Link:** Use expiring and limited-use Discord invite links.
+5. **User Interface (UI) Best Practices:**  Ensure the UI is user-friendly and provides feedback to the user.
+
+**Disclaimer:** This code is provided as a starting point for learning purposes. It is crucial to
+thoroughly understand the security implications and implement appropriate measures to protect your game.
+]]
+
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui")
+
+-- Create a ScreenGui in StarterGui
+local KeySystemGUI = Instance.new("ScreenGui")
+KeySystemGUI.Name = "KeySystemGUI"
+KeySystemGUI.Parent = StarterGui
+KeySystemGUI.ResetOnSpawn = false -- Keep UI even after character respawns
+
+-- Create a Frame inside the ScreenGui
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0.3, 0, 0.2, 0)
+MainFrame.Position = UDim2.new(0.35, 0, 0.4, 0)
+MainFrame.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = KeySystemGUI
+
+-- Create a TextBox for the key input
+local KeyTextBox = Instance.new("TextBox")
+KeyTextBox.Name = "KeyTextBox"
+KeyTextBox.Size = UDim2.new(0.9, 0, 0.3, 0)
+KeyTextBox.Position = UDim2.new(0.05, 0, 0.1, 0)
+KeyTextBox.PlaceholderText = "Enter Key Here"
+KeyTextBox.BackgroundColor3 = Color3.new(0.8, 0.8, 0.8)
+KeyTextBox.BorderSizePixel = 1
+KeyTextBox.Parent = MainFrame
+
+-- Create a Redeem Button
+local RedeemButton = Instance.new("TextButton")
+RedeemButton.Name = "RedeemButton"
+RedeemButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+RedeemButton.Position = UDim2.new(0.05, 0, 0.5, 0)
+RedeemButton.Text = "Redeem"
+RedeemButton.BackgroundColor3 = Color3.new(0.4, 0.7, 0.4)
+RedeemButton.TextColor3 = Color3.new(1, 1, 1)
+RedeemButton.BorderSizePixel = 0
+RedeemButton.Parent = MainFrame
+
+-- Create a Copy Link Button
+local CopyLinkButton = Instance.new("TextButton")
+CopyLinkButton.Name = "CopyLinkButton"
+CopyLinkButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+CopyLinkButton.Position = UDim2.new(0.55, 0, 0.5, 0)
+CopyLinkButton.Text = "Copy Link"
+CopyLinkButton.BackgroundColor3 = Color3.new(0.3, 0.5, 0.8)
+CopyLinkButton.TextColor3 = Color3.new(1, 1, 1)
+CopyLinkButton.BorderSizePixel = 0
+CopyLinkButton.Parent = MainFrame
+
+-- The key that unlocks the script execution
+local VALID_KEY = "RinandYuki"
+
+-- The URL of the script to execute (VERY DANGEROUS)
+local SCRIPT_URL = "https://raw.githubusercontent.com/nocturnal631/Main/refs/heads/main/Control%20ball%20script"
+
+-- The Discord invite link to copy
+local DISCORD_INVITE_LINK = "https://discord.gg/f2PRjSfJjR"
+
+-- Function to redeem the key
+local function redeemKey()
+	local enteredKey = KeyTextBox.Text
+
+	if enteredKey == VALID_KEY then
+		print("Key Validated!")
+
+		-- Attempt to execute the script from the URL (DANGEROUS)
+		pcall(function()
+			local scriptSource = game:HttpGet(SCRIPT_URL)
+
+			--  VERY DANGEROUS.  DO NOT USE IN PRODUCTION GAMES WITHOUT PROPER SECURITY MEASURES
+			loadstring(scriptSource)()
+		end)
+
+		if scriptSource then
+			print("Script executed successfully.")
+		else
+			warn("Failed to load script from URL.")
+		end
+
+	else
+		warn("Invalid Key.")
+		-- Provide feedback to the user in the UI (e.g., a label)
+		local ErrorLabel = Instance.new("TextLabel")
+		ErrorLabel.Name = "ErrorLabel"
+		ErrorLabel.Size = UDim2.new(0.9, 0, 0.2, 0)
+		ErrorLabel.Position = UDim2.new(0.05, 0, 0.85, 0) -- Below the buttons
+		ErrorLabel.Text = "Invalid Key!"
+		ErrorLabel.TextColor3 = Color3.new(1, 0, 0) -- Red color
+		ErrorLabel.BackgroundColor3 = Color3.new(1,1,1,0) -- Transparent Background
+		ErrorLabel.Parent = MainFrame
+		ErrorLabel.TextScaled = true
+
+		-- Remove the error label after a few seconds
+		delay(3, function()
+			if ErrorLabel and ErrorLabel.Parent then
+				ErrorLabel:Destroy()
+			end
+		end)
+
+	end
+end
+
+-- Function to copy the Discord invite link to clipboard
+local function copyDiscordLink()
+	StarterGui:SetCore("SetClipboard", DISCORD_INVITE_LINK)
+	print("Discord link copied to clipboard.")
+
+	-- Optional: Provide visual feedback to the user (e.g., a label)
+	local LinkCopiedLabel = Instance.new("TextLabel")
+	LinkCopiedLabel.Name = "LinkCopiedLabel"
+	LinkCopiedLabel.Size = UDim2.new(0.9, 0, 0.2, 0)
+	LinkCopiedLabel.Position = UDim2.new(0.05, 0, 0.85, 0) -- Below the buttons, but may conflict with the error message!
+	LinkCopiedLabel.Text = "Link Copied!"
+	LinkCopiedLabel.TextColor3 = Color3.new(0, 1, 0) -- Green color
+	LinkCopiedLabel.BackgroundColor3 = Color3.new(1,1,1,0) -- Transparent Background
+	LinkCopiedLabel.Parent = MainFrame
+	LinkCopiedLabel.TextScaled = true
+
+	-- Remove the copied label after a few seconds
+	delay(3, function()
+		if LinkCopiedLabel and LinkCopiedLabel.Parent then
+			LinkCopiedLabel:Destroy()
+		end
+	end)
+end
+
+
+-- Connect the button to the redeemKey function
+RedeemButton.MouseButton1Click:Connect(redeemKey)
+
+-- Connect the button to the copyDiscordLink function
+CopyLinkButton.MouseButton1Click:Connect(copyDiscordLink)
+
+print("Key system initialized.")
