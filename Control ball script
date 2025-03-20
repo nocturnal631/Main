@@ -1,0 +1,420 @@
+--[[
+ .____                  ________ ___.    _____                           __
+ |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________
+ |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
+ |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
+ |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|
+         \/          \/         \/    \/                \/     \/     \/
+          \_Welcome to LuaObfuscator.com   (Alpha 0.10.8) ~  Much Love, Ferib
+]]--
+
+local players = game:GetService("Players")
+local runService = game:GetService("RunService")
+local userInputService = game:GetService("UserInputService")
+local localPlayer = players.LocalPlayer
+local character = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local currentCamera = workspace.CurrentCamera
+local animator = humanoid:WaitForChild("Animator")
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://125865269944406"
+local loadedAnimation = animator:LoadAnimation(animation)
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+
+local ascendButton = Instance.new("TextButton")
+ascendButton.Size = UDim2.new(586.2 - (103 + 483), 0, 235.1 - (23 + 212), 0)
+ascendButton.Position = UDim2.new(1846.02 - (1228 + 618), 0, 0.2, 0)
+ascendButton.Text = "ASCEND"
+ascendButton.Parent = screenGui
+
+local controlButton = Instance.new("TextButton")
+controlButton.Size = UDim2.new(0.15, 0, 0.08, 0)
+controlButton.Position = UDim2.new(0.1, 0, 0.8, 997 - (915 + 82))
+controlButton.Text = "CONTROL"
+controlButton.Parent = screenGui
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0.3, 0, 1187.12 - (1069 + 118), 0)
+frame.Position = UDim2.new(0.35, 0, 0.6, 0)
+frame.BackgroundColor3 = Color3.fromRGB(44 - 19, 25, 25)
+frame.Visible = false
+frame.Parent = screenGui
+
+local speedLabel = Instance.new("TextLabel")
+speedLabel.Size = UDim2.new(1, 0, 0.3, 791 - (368 + 423))
+speedLabel.BackgroundTransparency = 3 - 2
+speedLabel.Text = "Speed: 70"
+speedLabel.TextColor3 = Color3.fromRGB(255, 255, 273 - (10 + 8))
+speedLabel.TextScaled = true
+speedLabel.Parent = frame
+
+local innerFrame = Instance.new("Frame")
+innerFrame.Size = UDim2.new(0.9, 0, 0.4, 442 - (416 + 26))
+innerFrame.Position = UDim2.new(0.05, 0, 0.5, 0)
+innerFrame.BackgroundColor3 = Color3.fromRGB(693 - (145 + 293), 255, 685 - (44 + 386))
+innerFrame.Parent = frame
+
+local statusFrame = Instance.new("Frame")
+statusFrame.Size = UDim2.new(1486.05 - (998 + 488), 0, 1, 0)
+statusFrame.Position = UDim2.new(772.07 - (201 + 571), 0, 1138 - (116 + 1022), 0)
+statusFrame.BackgroundColor3 = Color3.fromRGB(150 + 105, 0, 0)
+statusFrame.Parent = innerFrame
+
+local madeByLabel = Instance.new("TextLabel")
+madeByLabel.Size = UDim2.new(0.3, 859 - (814 + 45), 0.1, 0)
+madeByLabel.Position = UDim2.new(0.35, 0, 885.35 - (261 + 624), 0)
+madeByLabel.BackgroundTransparency = 1081 - (1020 + 60)
+madeByLabel.Text = "Made by Pahotfgo"
+madeByLabel.TextColor3 = Color3.fromRGB(1678 - (630 + 793), 863 - 608, 1207 - 952)
+madeByLabel.TextScaled = true
+madeByLabel.Parent = screenGui
+madeByLabel.Visible = false
+
+local isAscendActive = false
+local isControlActive = false
+local defaultSpeed = 14 + 21
+local ball
+local bodyVelocity
+local ballConnection
+
+-- Updated findFootball function -  "Football" Part directly in Workspace
+local function findFootball()
+    local football = workspace:FindFirstChild("Football")
+    if football then
+        return football  -- Return the Part directly
+    else
+        warn("Football Part not found in workspace.")
+        return nil -- Football Part not found
+    end
+    warn("Football was not found.")
+    return nil
+end
+
+local function controlBall()
+    local state = 1747 - (760 + 987)
+    while true do
+        if state == (1914 - (1789 + 124)) then
+            bodyVelocity = Instance.new("BodyVelocity")
+            bodyVelocity.Velocity = Vector3.new(766 - (745 + 21), 25, 0)
+            state = 2
+        end
+        if state == (7 - 4) then
+            ballConnection = runService.Heartbeat:Connect(function(step)
+                local velocity = 0
+                local x, y, z
+                while true do
+                    if velocity == (0 + 0) then
+                        if not isAscendActive or not ball or not ball.Parent or isControlActive then
+                            local count = 0
+                            while true do
+                                if count == (0 + 0) then
+                                    if bodyVelocity then
+                                        local waitCount = 1055 - (87 + 968)
+                                        while true do
+                                            if waitCount == (0 - 0) then
+                                                bodyVelocity:Destroy()
+                                                bodyVelocity = nil
+                                                break
+                                            end
+                                        end
+                                    end
+                                    if ballConnection then
+                                        local innerCount = 0 + 0
+                                        while true do
+                                            if innerCount == (0 - 0) then
+                                                ballConnection:Disconnect()
+                                                ballConnection = nil
+                                                break
+                                            end
+                                        end
+                                    end
+                                    count = 1
+                                end
+                                if count == (1414 - (447 + 966)) then
+                                    return
+                                end
+                            end
+                        end
+                        x = x + (85 * step)
+                        velocity = 1
+                    end
+                    if velocity == 3 then
+                        ball.Velocity = z * (232 - 147)
+                        break
+                    end
+                    if velocity == (1819 - (1703 + 114)) then
+                        x = Vector3.new(humanoidRootPart.Position.X + x, defaultSpeed + (713 - (376 + 325)), humanoidRootPart.Position.Z + z)
+                        z = (x - ball.Position).unit
+                        velocity = 4 - 1
+                    end
+                    if velocity == 1 then
+                        x = math.cos(x) * 5
+                        z = math.sin(x) * (15 - 10)
+                        velocity = 1 + 1
+                    end
+                end
+            end)
+            break
+        end
+        if state == (0 - 0) then
+            if not ball or isControlActive then return end
+            x = 0
+            state = 15 - (9 + 5)
+        end
+        if state == (378 - (85 + 291)) then
+            bodyVelocity.MaxForce = Vector3.new(5265 - (243 + 1022), 15220 - 11220, 4000)
+            bodyVelocity.Parent = ball
+            state = 3 + 0
+        end
+    end
+end
+
+runService.Heartbeat:Connect(function()
+    if isAscendActive then
+        if humanoidRootPart.Position.Y < defaultSpeed then
+            humanoidRootPart.Velocity = Vector3.new(0, 25, 1180 - (1123 + 57))
+        else
+            humanoidRootPart.Velocity = Vector3.new(0, 254 - (163 + 91), 1930 - (1869 + 61))
+            local direction = humanoid.MoveDirection
+            if direction.Magnitude > (0 + 0) then
+                humanoidRootPart.Position = humanoidRootPart.Position + ((direction * defaultSpeed) / 10)
+            end
+        end
+    end
+end)
+
+local function stopControl()
+    if not ball then return end
+    if ballConnection then
+        ballConnection:Disconnect()
+        ballConnection = nil
+    end
+    if bodyVelocity then
+        bodyVelocity:Destroy()
+        bodyVelocity = nil
+    end
+    currentCamera.CameraSubject = ball
+    local velocity = Instance.new("BodyVelocity")
+    velocity.MaxForce = Vector3.new(1535952 - 535952, 136839 + 863161, 1374247 - 374247)
+    velocity.Parent = ball
+    local ballConnection
+    ballConnection = runService.Heartbeat:Connect(function()
+        local count = 0 + 0
+        while true do
+            if count == (1474 - (1329 + 145)) then
+                if not isControlActive or not ball or not ball.Parent then
+                    velocity:Destroy()
+                    currentCamera.CameraSubject = character
+                    if ballConnection then
+                        ballConnection:Disconnect()
+                    end
+                    return
+                end
+                velocity.Velocity = currentCamera.CFrame.LookVector * defaultSpeed
+                break
+            end
+        end
+    end)
+end
+
+ascendButton.MouseButton1Click:Connect(function()
+    if isAscendActive then
+        isAscendActive = false
+        ascendButton.Text = "ASCEND"
+        loadedAnimation:Stop()
+        if ballConnection then
+            ballConnection:Disconnect()
+            ballConnection = nil
+        end
+        if bodyVelocity then
+            bodyVelocity:Destroy()
+            bodyVelocity = nil
+        end
+    else
+        local count = 0
+        while true do
+            if count == (971 - (140 + 831)) then
+                isAscendActive = true
+                ascendButton.Text = "STOP"
+                count = 1851 - (1409 + 441)
+            end
+            if count == (720 - (15 + 703)) then
+                if ball then
+                    controlBall()
+                end
+                break
+            end
+            if count == (1 + 0) then
+                loadedAnimation:Play()
+                ball = findFootball()
+                count = 440 - (262 + 176)
+            end
+        end
+    end
+end)
+
+controlButton.MouseButton1Click:Connect(function()
+    local count = 0
+    while true do
+        if count == 0 then
+            if not ball then
+                ball = findFootball()
+                if not ball then
+                    warn("No Ball Found!")
+                    return
+                end
+            end
+            isControlActive = not isControlActive
+            count = 1
+        end
+        if count == (1722 - (345 + 1376)) then
+            controlButton.BackgroundColor3 = (isControlActive and Color3.fromRGB(688 - (198 + 490), 1126 - 871, 0)) or Color3.fromRGB(255, 1206 - (696 + 510), 0)
+            frame.Visible = isControlActive
+            count = 2
+        end
+        if count == (1264 - (1091 + 171)) then
+            if isControlActive then
+                stopControl()
+            elseif isAscendActive then
+                controlBall()
+            end
+            break
+        end
+    end
+end)
+
+local inputActive = false
+statusFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        inputActive = true
+    end
+end)
+
+userInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        inputActive = false
+    end
+end)
+
+runService.RenderStepped:Connect(function()
+    if inputActive then
+        local mouseX = userInputService:GetMouseLocation().X
+        local frameX = innerFrame.AbsolutePosition.X
+        local frameXEnd = frameX + innerFrame.AbsoluteSize.X
+        local relativePos = (mouseX - frameX) / (frameXEnd - frameX)
+        statusFrame.Position = UDim2.new(math.clamp(relativePos, 0, 3 - 2) - (0.025 - 0), 374 - (123 + 251), 0, 0)
+        defaultSpeed = math.floor((708 - (208 + 490)) + (relativePos * (21 + 219)))
+        speedLabel.Text = "Speed: " .. tostring(defaultSpeed)
+    end
+end)
+
+userInputService.InputBegan:Connect(function(input, processed)
+    if processed then return end
+    if input.KeyCode == Enum.KeyCode.Y then
+        ascendButton.MouseButton1Click:Fire()
+    elseif input.KeyCode == Enum.KeyCode.U then
+        controlButton.MouseButton1Click:Fire()
+    end
+end)
+
+madeByLabel.Visible = true
+wait(1 + 1)
+madeByLabel.Visible = false
+
+
+-- Style the ascendButton
+ascendButton.Font = Enum.Font.SourceSansBold
+ascendButton.TextSize = 24
+ascendButton.TextColor3 = Color3.new(1, 1, 1) -- White text
+ascendButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.9) -- A nice blue
+ascendButton.BorderSizePixel = 2
+ascendButton.BorderColor3 = Color3.new(0, 0, 0) -- Black border
+ascendButton.ClipsDescendants = true
+
+-- Add a subtle gradient to the background using UI gradients (if desired)
+local ascendButtonGradient = Instance.new("UIGradient")
+ascendButtonGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.new(0.2, 0.6, 0.9)),
+    ColorSequenceKeypoint.new(1, Color3.new(0.1, 0.4, 0.7))
+})
+ascendButtonGradient.Rotation = 90
+ascendButtonGradient.Parent = ascendButton
+
+-- Rounded corners with UICorner (for a modern look)
+local ascendButtonCorner = Instance.new("UICorner")
+ascendButtonCorner.CornerRadius = UDim.new(0, 8) -- Adjust radius as needed
+ascendButtonCorner.Parent = ascendButton
+
+-- Add a hover effect (slightly lighten the background)
+ascendButton.MouseEnter:Connect(function()
+    ascendButton.BackgroundColor3 = Color3.new(0.3, 0.7, 1)
+end)
+
+ascendButton.MouseLeave:Connect(function()
+    ascendButton.BackgroundColor3 = Color3.new(0.2, 0.6, 0.9)
+end)
+
+-- Style the controlButton (similar styling to ascendButton)
+controlButton.Font = Enum.Font.SourceSansBold
+controlButton.TextSize = 20
+controlButton.TextColor3 = Color3.new(1, 1, 1)
+controlButton.BackgroundColor3 = Color3.new(0.9, 0.3, 0.3) -- Red color
+controlButton.BorderSizePixel = 2
+controlButton.BorderColor3 = Color3.new(0, 0, 0)
+controlButton.ClipsDescendants = true
+
+-- Gradient for controlButton
+local controlButtonGradient = Instance.new("UIGradient")
+controlButtonGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.new(0.9, 0.3, 0.3)),
+    ColorSequenceKeypoint.new(1, Color3.new(0.7, 0.2, 0.2))
+})
+controlButtonGradient.Rotation = 90
+controlButtonGradient.Parent = controlButton
+
+-- Rounded corners for controlButton
+local controlButtonCorner = Instance.new("UICorner")
+controlButtonCorner.CornerRadius = UDim.new(0, 8)
+controlButtonCorner.Parent = controlButton
+
+-- Hover effect for controlButton
+controlButton.MouseEnter:Connect(function()
+    controlButton.BackgroundColor3 = Color3.new(1, 0.4, 0.4)
+end)
+
+controlButton.MouseLeave:Connect(function()
+    controlButton.BackgroundColor3 = Color3.new(0.9, 0.3, 0.3)
+end)
+
+--Style frame
+frame.BorderSizePixel = 2
+frame.BorderColor3 = Color3.new(0, 0, 0)
+
+-- Style innerFrame
+innerFrame.BorderSizePixel = 2
+innerFrame.BorderColor3 = Color3.new(0, 0, 0)
+
+--Style statusFrame
+statusFrame.BorderSizePixel = 2
+statusFrame.BorderColor3 = Color3.new(0, 0, 0)
+statusFrame.ClipsDescendants = true
+local statusFrameCorner = Instance.new("UICorner")
+statusFrameCorner.CornerRadius = UDim.new(0, 8)
+statusFrameCorner.Parent = statusFrame
+
+-- Style speedLabel
+speedLabel.Font = Enum.Font.SourceSansBold
+speedLabel.TextSize = 20
+speedLabel.TextColor3 = Color3.new(1, 1, 1)
+--speedLabel.BackgroundColor3 = Color3.new(0.9, 0.3, 0.3) -- Red color
+--speedLabel.BackgroundTransparency = 0
+
+-- Style madeByLabel
+madeByLabel.Font = Enum.Font.SourceSansBold
+madeByLabel.TextSize = 16
+madeByLabel.TextColor3 = Color3.new(1, 1, 1)
+--madeByLabel.BackgroundColor3 = Color3.new(0.9, 0.3, 0.3) -- Red color
+--madeByLabel.BackgroundTransparency = 0
