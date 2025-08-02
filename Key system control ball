@@ -55,7 +55,7 @@ local VALID_KEY = "RinandYuki"
 local SCRIPT_URL = "https://raw.githubusercontent.com/nocturnal631/Main/refs/heads/main/Control%20ball%20script"
 
 -- The Discord invite link to copy
-local DISCORD_INVITE_LINK = "https://discord.gg/f2PRjSfJjR"
+local DISCORD_INVITE_LINK = "https://discord.gg/vzRXgYQXag"
 
 -- Function to redeem the key
 local function redeemKey()
