@@ -1,37 +1,3 @@
---[[
-This script implements a key system for Roblox, allowing users to redeem a specific key ("RinandYuki")
-to execute a script loaded from a GitHub URL. It also includes a button to copy a Discord invite link
-to the user's clipboard.
-
-**Important Security Considerations:**
-
-* **loadstring is extremely dangerous!** Never use `loadstring` in a live game unless you completely trust
-  the source of the code. Malicious code loaded through `loadstring` can compromise the entire game.  It's
-  strongly recommended to explore safer alternatives like ModuleScripts, or even data stores for configuration.
-
-* **GitHub as a source for scripts:**  Using GitHub directly as a source for scripts can be unreliable.  GitHub
-  is not a Content Delivery Network (CDN) and might have availability issues.  Consider using a more reliable
-  hosting solution for your scripts.
-
-* **Key Validation:**  A simple key like "RinandYuki" is very easy to guess and bypass. Implement more robust
-  key generation and validation techniques to prevent unauthorized access.  Consider using more complex
-  keys, server-side validation, and potentially using obfuscation to protect the key.
-
-* **Discord Link Security:**  Long-term Discord invite links are often abused. Set the link to expire and
-  only offer a limited number of uses. This makes it harder for bots to scrape the link.
-
-**Recommendations for Improvement:**
-
-1. **Replace loadstring:** Use ModuleScripts or a more secure alternative for script execution.
-2. **Robust Key Validation:** Implement stronger key generation and server-side validation.
-3. **Reliable Script Hosting:** Use a dedicated hosting solution for your scripts.
-4. **Secure Discord Link:** Use expiring and limited-use Discord invite links.
-5. **User Interface (UI) Best Practices:**  Ensure the UI is user-friendly and provides feedback to the user.
-
-**Disclaimer:** This code is provided as a starting point for learning purposes. It is crucial to
-thoroughly understand the security implications and implement appropriate measures to protect your game.
-]]
-
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 
